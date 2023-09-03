@@ -1,0 +1,106 @@
+CREATE TABLE tblEmployee3(Name VARCHAR(250),Gender VARCHAR(250));
+
+INSERT INTO tblEmployee3 VALUES('Sam','Male');
+INSERT INTO tblEmployee3 VALUES('Stephen','Male');
+INSERT INTO tblEmployee3 VALUES('Sara','Female');
+INSERT INTO tblEmployee3 VALUES('Todd','Male');
+INSERT INTO tblEmployee3 VALUES('John','Male');
+INSERT INTO tblEmployee3 VALUES('Sana','Female');
+INSERT INTO tblEmployee3 VALUES('James','Male');
+INSERT INTO tblEmployee3 VALUES('Rob','Male');
+INSERT INTO tblEmployee3 VALUES('Steve','Male');
+INSERT INTO tblEmployee3 VALUES('Pam','Female');
+
+SELECT * FROM tblEmployee3;
+
+SELECT Name, Gender FROM tblEmployee3;
+
+CREATE PROCEDURE spGetEmployees
+AS 
+BEGIN
+SELECT Name, Gender FROM tblEmployee3;
+END
+
+CREATE PROC spGetEmployees
+AS 
+BEGIN
+SELECT Name, Gender FROM tblEmployee3;
+END
+
+spGetEmployees
+
+EXEC spGetEmployees;
+
+EXECUTE spGetEmployees;
+
+USE [RyderDB]
+GO
+
+DECLARE	@return_value int
+
+EXEC	@return_value = [dbo].[spGetEmployees]
+
+SELECT	'Return Value' = @return_value
+
+GO
+
+CREATE PROCEDURE spGetEmployeesByGenderAndDepartment
+@Gender VARCHAR(20),
+@DepartmentId INT
+AS
+BEGIN 
+   SELECT Name, Gender, DepartmentId FROM tblEmployee WHERE Gender=@Gender AND DepartmentId=@DepartmentId;
+END
+
+spGetEmployeesByGenderAndDepartment 'Male',1
+spGetEmployeesByGenderAndDepartment 'Male',2
+
+spGetEmployeesByGenderAndDepartment @Gender='Male',@DepartmentId=2
+
+SELECT * FROM tblEmployee;
+
+USE [RyderDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[spGetEmployees]    Script Date: 9/3/2023 11:16:15 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[spGetEmployees]
+AS 
+BEGIN
+SELECT Name, Gender FROM tblEmployee3;
+END
+GO
+
+sp_helptext spGetEmployees;
+
+ALTER PROCEDURE spGetEmployees  
+AS   
+BEGIN  
+SELECT Name, Gender FROM tblEmployee3 ORDER BY Name;  
+END  
+
+DROP PROCEDURE spGetEmployees;
+
+sp_helptext [spGetEmployeesByGenderAndDepartment];
+
+ALTER PROCEDURE spGetEmployeesByGenderAndDepartment
+@Gender VARCHAR(20),
+@DepartmentId INT
+WITH Encryption
+AS
+BEGIN 
+   SELECT Name, Gender, DepartmentId FROM tblEmployee WHERE Gender=@Gender AND DepartmentId=@DepartmentId;
+END
+
+sp_helptext [spGetEmployeesByGenderAndDepartment];
+
+
+
+
+
+
